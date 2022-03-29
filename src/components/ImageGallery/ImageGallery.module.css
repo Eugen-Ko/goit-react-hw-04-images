@@ -1,0 +1,14 @@
+/*
+ Стили компонента ImageGallery
+ */
+ .ImageGallery {
+  display: grid;
+  justify-content: center;
+  max-width: 1280px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 300px));
+  grid-gap: 16px;
+  margin: 0 auto;
+  padding: 16px;
+  list-style: none;
+
+}

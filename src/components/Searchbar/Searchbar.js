@@ -1,49 +1,41 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 
 
 import styles from './Searchbar.module.css';
 
-export default class Searchbar extends Component {
-  state = {
-    imagesName: '',
-  }
+export default function Searchbar({handleFormSubmit}) {
 
-  handlerInput = e => {
-    this.setState({ imagesName: e.currentTarget.value.toLowerCase().trim() });
-  }
+  const [imagesName, setImagesName] = useState('');
 
-  handlerSubmit = e => {
+  const handlerSubmit = e => {
     e.preventDefault(e);
-    if (this.state.imagesName === '') {
+    if (imagesName === '') {
       toast.error('Input name of image');
       return;
     }
-    this.props.handleFormSubmit(this.state.imagesName);
+    handleFormSubmit(imagesName);
     e.target[1].value = '';
   }
 
-  render() {
-    return (
-      <header className={styles.Searchbar}>
-        <form className={styles.SearchForm} onSubmit={this.handlerSubmit}>
-          <button type="submit" className={styles.SearchFormButton}>
-            <BsSearch style={{width: 20, height: 20}} />
-            <span className={styles.SearchFormButtonLabel}>Search</span>
-          </button>
-
-          <input
-            className={styles.SearchFormInput}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.handlerInput}
-          />
-        </form>
-      </header>
-    )
-  }
+  return (
+    <header className={styles.Searchbar}>
+      <form className={styles.SearchForm} onSubmit={handlerSubmit}>
+        <button type="submit" className={styles.SearchFormButton}>
+          <BsSearch style={{width: 20, height: 20}} />
+          <span className={styles.SearchFormButtonLabel}>Search</span>
+        </button>
+        <input
+          className={styles.SearchFormInput}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={(e) => setImagesName(e.currentTarget.value.toLowerCase().trim())}
+        />
+      </form>
+    </header>
+  )
 
 }

@@ -28,16 +28,16 @@ export default function App() {
         fetchImages({imagesName, currentPage})
         .then(response => 
           {currentPage > 1 
-            ? setCurrentItems([...currentItems, ...response.hits]) 
+            ? setCurrentItems(prevItems => ([...prevItems, ...response.hits])) 
             : setCurrentItems(response.hits);
             setIsPanding(false)
           });
       }   
     }
-  , [currentPage, imagesName]);  
+  , [currentPage, imagesName, isPanding]);  
       
-  const handleFormSubmit = (imagesName) => {
-    setImagesName(imagesName);
+  const handleFormSubmit = (imageName) => {
+    setImagesName(imageName);
     setCurrenPage(1);
     setCurrentItems([]);
     setIsPanding(!isPanding);

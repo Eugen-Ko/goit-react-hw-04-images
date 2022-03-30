@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-const Button = ({handleLoadMore}) => {
+export default function Button ({handleLoadMore}) {
   return (
     <>
       <button type='button'
@@ -13,5 +13,3 @@ const Button = ({handleLoadMore}) => {
     </>
   )
 }
-
-export default Button;

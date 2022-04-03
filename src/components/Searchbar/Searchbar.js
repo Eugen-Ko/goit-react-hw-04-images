@@ -11,7 +11,7 @@ export default function Searchbar({handleFormSubmit}) {
 
   const handlerSubmit = e => {
     e.preventDefault(e);
-    if (imagesName === '') {
+    if (e.target[1].value === '') {
       toast.error('Input name of image');
       return;
     }

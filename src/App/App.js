@@ -20,16 +20,34 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImg, setModalImage] = useState('');
   const [modalTags, setModalTags] = useState('');
-  
+
+//----------Перевірка на кінець сторінок ----------------------------------
+  const [endPage, setEndPage] = useState(1);
+
+  useEffect(
+    () => {
+      setEndPage(1);
+      fetchImages({imagesName})
+      .then(data => 
+        { (data.totalHits % 12) === 0
+          ? setEndPage(data.totalHits / 12)
+          : setEndPage(Math.floor(data.totalHits / 12) + 1)
+        }
+      )        
+    }
+  , [imagesName]);
+//----------Нижче у ретурні друга частина ---------------------------------
+
+
   useEffect(
     () => {
       if (isPanding) 
       { 
         fetchImages({imagesName, currentPage})
         .then(response => 
-          {currentPage > 1 
+          { currentPage > 1 
             ? setCurrentItems(prevItems => ([...prevItems, ...response.hits])) 
-            : setCurrentItems(response.hits);            
+            : setCurrentItems(response.hits);
           })
         .finally(() => setIsPanding(false));
       }   
@@ -54,16 +72,20 @@ export default function App() {
     setIsPanding(!isPanding);
   };
 
+
+  console.log(endPage, currentPage);
   return (
     <>
       <Searchbar handleFormSubmit={handleFormSubmit} />      <ImageGallery 
         currentItems = {currentItems} 
         handleTogleModal = {handleTogleModal}
       />
-      {currentItems.length >= 12 && 
+{/* Перевірка на кінець сторінок */}
+      {(endPage > currentPage && currentItems.length > 0)  && 
         <Button 
           handleLoadMore = {handleLoadMore}
         />}
+{/* Кінець */}
       {isModalOpen && <Modal 
         modalImg = {modalImg}
         modalTags = {modalTags}

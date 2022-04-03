@@ -29,9 +29,9 @@ export default function App() {
         .then(response => 
           {currentPage > 1 
             ? setCurrentItems(prevItems => ([...prevItems, ...response.hits])) 
-            : setCurrentItems(response.hits);
-            setIsPanding(false)
-          });
+            : setCurrentItems(response.hits);            
+          })
+        .finally(() => setIsPanding(false));
       }   
     }
   , [currentPage, imagesName, isPanding]);  
